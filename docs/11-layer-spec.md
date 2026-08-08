@@ -21,6 +21,39 @@ OpenDesign 提倡的是：
 
 ---
 
+## 落地状态（标准 ≠ 已实现）
+
+这份文档是**标准**，不是当前产物的说明书。两者对不上的地方必须写清楚——
+一个卖"可机读、可核验"的项目，如果自己的层数都对不上文件里数出来的，
+那所有别的精确性声明也一起不可信了。
+
+下表按 2026-08 的真实数据统计（`sites/*.json` 1,517 个站；pack 侧抽 158 个包实测填充率）：
+
+| # | 层 | `spec.json` / catalog（全部 1,486 站） | `sites-entry.json`（920 个有包站） |
+|---|---|---|---|
+| 1 | Identity | ✗ schema 里有，实际 0 个站有值 | ✓ 100% |
+| 2 | Colors | ✓ 1,517/1,517 | ✓ 100% |
+| 3 | Typography | ✓ 1,517/1,517 | ✓ 100% |
+| 4 | Spacing | ✓ 1,517/1,517 | ✓ 98% |
+| 5 | Surfaces | ✓ 1,517/1,517 | ✓ 100% |
+| 6 | Layout | ✓ 1,517/1,517 | ✓ 100% |
+| 7 | Components | ✗ | ✓ 98% |
+| 8 | Motion | ✓ 1,517/1,517 | ✓ 100% |
+| 9 | Interaction | ✗ | ✓ 98% |
+| 10 | Voice | ✗ | ✓ 98% |
+| 11 | Don'ts | ✗ | ✓ 98% |
+| 12 | System Prompt | ✗ | ✓ 98% |
+
+**一句话**：标准的 11 层在**有完整素材包的 920 个站**上是全部落地的（`sites-entry.json`，
+每层填充率 98–100%，另有 `DESIGN.md` 把同样内容渲染成 9 个可读章节）。
+另外那 ~566 个站只跑到了轻量抽取，只有 **6 层实测 token**——因为 Components /
+Interaction / Voice / Don'ts 这几层需要 Playwright 截图才能生成。
+
+调用方在检索阶段就能区分：`catalog.json` 里每条带 `spec_completeness`，
+不必 fetch 完才发现这条只有半份。
+
+---
+
 ## Schema 形式
 
 完整 JSON Schema 见 [11-layer-schema.json](11-layer-schema.json)（即将提供）。
@@ -202,7 +235,7 @@ interface DesignSpec {
 
 **目标**：hover / click / transition / keyboard 四种状态的统一规则。
 
-10. Voice · 文案语气
+### 10. Voice · 文案语气
 
 **目标**：让 AI 写出**同气质的文案**，而不是"什么内容都行"。
 
